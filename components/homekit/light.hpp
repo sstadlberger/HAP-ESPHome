@@ -194,7 +194,7 @@ namespace esphome
 
         ESP_LOGI(TAG, "Light '%s' linked to HomeKit", accessory_name.c_str());
       }
-      void on_light_target_state_reached() {
+      void on_light_target_state_reached() override {
         LightEntity::on_light_update(lightPtr);
       }
     };
