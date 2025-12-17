@@ -190,9 +190,12 @@ namespace esphome
         /* Add the Accessory to the HomeKit Database */
         hap_add_bridged_accessory(accessory, hap_get_unique_aid(std::to_string(lightPtr->get_object_id_hash()).c_str()));
         if (!lightPtr->is_internal())
-          lightPtr->add_new_target_state_reached_callback([this]() { LightEntity::on_light_update(lightPtr); });
+          light_state->add_target_state_reached_listener(this);
 
         ESP_LOGI(TAG, "Light '%s' linked to HomeKit", accessory_name.c_str());
+      }
+      void on_light_target_state_reached() override {
+        LightEntity::on_light_update(lightPtr);
       }
     };
   }
